@@ -19,6 +19,8 @@
       <p> {{ changeText() }} </p>
       <!-- Note this still runs in order, so the v-once tag would still show New Text, here. -->
       <p > {{ someText }}</p>
+      <!-- If we want to store and render full html, we use the v-html directive.  This exposes the app to XSS attacks.  -->
+      <p v-html="finishedLink"></p>
     </div>
 
   
@@ -30,7 +32,8 @@
      data: {
      message: 'Hello Vue!',
      link: 'http://google.com',
-     someText: 'Old Text'
+     someText: 'Old Text',
+     finishedLink: '<a href="http://google.com">Full HTML link to Google</a>'
      },
      methods: {
      	sayHowdy: function() {
