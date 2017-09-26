@@ -8,8 +8,17 @@
   
   <body>
     <div id="app">
+      <!--  We can store values in Vue under data and interpolate them -->
       <p>{{ message }}</p>
+      <!-- We can also stores functions in methods and call them when we interpolate, as long as it can be converted to a string. -->
       <p>{{ sayHowdy() }}</p>
+      <!-- In order to interpolate links and other html attributes, we use the v-bind directive. -->
+      <p> I'm a link.  <a v-bind:href="link">Google</a></p>
+      <!-- The v-once directive tells Vue to only render an attribute one, even if it changes later -->
+      <p v-once> {{ someText }} </p>
+      <p> {{ changeText() }} </p>
+      <!-- Note this still runs in order, so the v-once tag would still show New Text, here. -->
+      <p > {{ someText }}</p>
     </div>
 
   
@@ -19,11 +28,20 @@
   	let app = new Vue({
      el: '#app',
      data: {
-     message: 'Hello Vue!'
+     message: 'Hello Vue!',
+     link: 'http://google.com',
+     someText: 'Old Text'
      },
      methods: {
      	sayHowdy: function() {
      		return 'Howdy, y\'all!';
+     	}, // We can access the data object within our methods by using 'this'.
+     	giveMeMessage: function() {
+     		return this.message;
+     	},
+     	changeText: function() {
+     		this.someText = 'New Text!';
+     		return this.someText;
      	}
      }
    })
