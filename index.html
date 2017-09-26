@@ -1,0 +1,33 @@
+</!DOCTYPE html>
+<html>
+  <script src="https://unpkg.com/vue"></script>
+
+  <head>
+  	<title>Vue JS</title>
+  </head>
+  
+  <body>
+    <div id="app">
+      <p>{{ message }}</p>
+      <p>{{ sayHowdy() }}</p>
+    </div>
+
+  
+  </body>
+
+  <script type="text/javascript">
+  	let app = new Vue({
+     el: '#app',
+     data: {
+     message: 'Hello Vue!'
+     },
+     methods: {
+     	sayHowdy: function() {
+     		return 'Howdy, y\'all!';
+     	}
+     }
+   })
+
+
+  </script>
+</html>
