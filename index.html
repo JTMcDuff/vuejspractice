@@ -10,7 +10,7 @@
     <div id="app">
       <!--  We can store values in Vue under data and interpolate them -->
       <p>{{ message }}</p>
-      <!-- We can also stores functions in methods and call them when we interpolate, as long as it can be converted to a string. -->
+      <!-- We can also store functions in methods and call them when we interpolate, as long as it can be converted to a string. -->
       <p>{{ sayHowdy() }}</p>
       <!-- In order to interpolate links and other html attributes, we use the v-bind directive. -->
       <p> I'm a link.  <a v-bind:href="link">Google</a></p>
@@ -21,6 +21,12 @@
       <p > {{ someText }}</p>
       <!-- If we want to store and render full html, we use the v-html directive.  This exposes the app to XSS attacks.  -->
       <p v-html="finishedLink"></p>
+      <!--  Can listnen to events using v-on -->
+      <button v-on:click="increase">Click me</button>
+      <p>{{ counter }}</p>
+      <!-- Can also use v-on for any other events, and pass that event to associated functions -->
+      <p v-on:mousemove="updateCoords"> Coordinates:  {{ x }} / {{ y }} </p>
+
     </div>
 
   
@@ -33,7 +39,10 @@
      message: 'Hello Vue!',
      link: 'http://google.com',
      someText: 'Old Text',
-     finishedLink: '<a href="http://google.com">Full HTML link to Google</a>'
+     finishedLink: '<a href="http://google.com">Full HTML link to Google</a>',
+     counter: 0,
+     x: 0,
+     y: 0
      },
      methods: {
      	sayHowdy: function() {
@@ -45,6 +54,13 @@
      	changeText: function() {
      		this.someText = 'New Text!';
      		return this.someText;
+     	},
+     	increase: function() {
+     		this.counter++;
+     	},
+     	updateCoords: function(event) {
+     		this.x = event.clientX;
+     		this.y = event.clientY;
      	}
      }
    })
