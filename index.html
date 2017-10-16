@@ -31,6 +31,8 @@
       </p>
       <!--  Can use keyUp event associated with specific keys, such as enter -->
      <p> <input type="text" v-on:keyup.enter="alertMe"> </p>
+     <!-- For two way binding of values, we can simply use v-on.  This updates the data properties and renders to the page.  -->
+     <p>  <input type="text" v-model="name">  {{ name  }}</p>
     </div>
 
   
@@ -46,7 +48,15 @@
 	     finishedLink: '<a href="http://google.com">Full HTML link to Google</a>',
 	     counter: 0,
 	     x: 0,
-	     y: 0
+	     y: 0,
+	     name:  'Johnny'
+     },
+     computed: {
+     	//Computed functions are only run once, and thereafter only when their values would change.  This is useful when tracking multiple values, otherwise any change to the DOM causes all associated methods to fire again.
+     },
+     watch: {
+     	//Watch methods are much like computed, but they don't cache.  For this reason, computed is preferred, but watch can execut asynch tasks.
+     	// If you run closures here, you need to store the this property, as it doesn't pass down into the closure on its own.
      },
      methods: {
      	sayHowdy: function() {
