@@ -22,11 +22,15 @@
       <!-- If we want to store and render full html, we use the v-html directive.  This exposes the app to XSS attacks.  -->
       <p v-html="finishedLink"></p>
       <!--  Can listnen to events using v-on -->
-      <button v-on:click="increase">Click me</button>
+      <button v-on:click="increase(2)">Click me</button>
       <p>{{ counter }}</p>
       <!-- Can also use v-on for any other events, and pass that event to associated functions -->
-      <p v-on:mousemove="updateCoords"> Coordinates:  {{ x }} / {{ y }} </p>
-
+      <!-- the .stop method can be called on an event to prevent the even from propagating upward. -->
+      <p v-on:mousemove="updateCoords"> Coordinates:  {{ x }} / {{ y }}
+      		<span v-on:mousemove.stop="">DEAD SPOT </span>
+      </p>
+      <!--  Can use keyUp event associated with specific keys, such as enter -->
+     <p> <input type="text" v-on:keyup.enter="alertMe"> </p>
     </div>
 
   
@@ -35,14 +39,14 @@
   <script type="text/javascript">
   	let app = new Vue({
      el: '#app',
-     data: {
-     message: 'Hello Vue!',
-     link: 'http://google.com',
-     someText: 'Old Text',
-     finishedLink: '<a href="http://google.com">Full HTML link to Google</a>',
-     counter: 0,
-     x: 0,
-     y: 0
+	     data: {
+	     message: 'Hello Vue!',
+	     link: 'http://google.com',
+	     someText: 'Old Text',
+	     finishedLink: '<a href="http://google.com">Full HTML link to Google</a>',
+	     counter: 0,
+	     x: 0,
+	     y: 0
      },
      methods: {
      	sayHowdy: function() {
@@ -54,13 +58,19 @@
      	changeText: function() {
      		this.someText = 'New Text!';
      		return this.someText;
-     	},
-     	increase: function() {
-     		this.counter++;
-     	},
+     	}, // Can pass the event as $event, which is a reserved name for each event with Vue.
+     	increase: function(step, $event) {
+     		this.counter+= step;
+     	}, 
      	updateCoords: function(event) {
      		this.x = event.clientX;
      		this.y = event.clientY;
+     	},  // stopPropagation prevents events from bubbling up to higher elements.
+     	dummy: function() {
+     		event.stopPropagation();
+     	},
+     	alertMe: function() {
+     		alert('Alert!');
      	}
      }
    })
